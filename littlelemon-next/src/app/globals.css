@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* ===== Little Lemon – Design Tokens (Light) ===== */
+:root {
+  /* brand */
+  --ll-brand: #495E56;      /* основной зелёный */
+  --ll-brand-ink: #3D4A45;  /* темнее для hover/текста */
+  --ll-lemon: #F3CD14;      /* лимонный акцент */
+
+  /* surface */
+  --ll-bg: #ffffff;
+  --ll-nav-bg: #36503a;
+  --ll-fg: #171717;
+  --ll-paper: #FAFAF9;
+  --ll-border: #E5E7EB;
+
+  /* effects */
+  --ll-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --ll-shadow-md: 0 6px 20px rgba(0,0,0,0.08);
+
+  /* radius */
+  --ll-r-sm: 8px;
+  --ll-r-md: 14px;
+  --ll-r-lg: 20px;
+
+  /* типографика: переменные шрифтов задаются в layout.tsx через next/font */
+  --font-ui: var(--font-geist-sans, system-ui, Arial);
+  --font-brand: var(--font-fraunces, var(--font-ui));
+}
+
+:root { color-scheme: light; } /* всегда светлая тема */
+
+/* Утилиты под брендовые цвета (на случай без Tailwind) */
+.text-brand { color: var(--ll-brand) !important; }
+.bg-brand { background: var(--ll-brand) !important; color: #fff; }
+.bg-lemon { background: var(--ll-lemon) !important; color: #111; }
+.border-brand { border-color: var(--ll-brand) !important; }
+
+/* ===== Navbar ===== */
+.llem-navbar {
+  position: sticky; top: 0; z-index: 10;
+  height: 56px;
+  backdrop-filter: blur(6px);
+  background: color-mix(in oklab, var(--ll-bg) 85%, transparent);
+  border-bottom: 1px solid var(--ll-border);
+}
+.llem-navbar__inner {
+  max-width: 1024px; margin: 0 auto; height: 56px;
+  display: flex; align-items: center; gap: 12px; padding: 0 16px;
+}
+.llem-brand {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--ll-brand);
+  letter-spacing: 0.18em; font-weight: 800; font-family: var(--font-brand);
+}
+.llem-nav {
+  display: flex; align-items: center; gap: 4px; margin-left: 16px;
+}
+.llem-nav a {
+  padding: 8px 12px; border-radius: 10px; font-size: 14px;
+  text-decoration: none; color: inherit;
+}
+.llem-nav a:hover { background: rgba(0,0,0,0.05); }
+.llem-nav a[aria-current="page"] { color: var(--ll-brand); font-weight: 600; }
+
+/* ===== Buttons ===== */
+.llem-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 10px 16px; border-radius: var(--ll-r-md);
+  font-size: 14px; font-weight: 600; cursor: pointer; user-select: none;
+  border: 1px solid transparent; transition: 150ms ease;
+  box-shadow: var(--ll-shadow-sm);
+}
+.llem-btn--primary { background: var(--ll-brand); color: #fff; }
+.llem-btn--primary:hover { background: var(--ll-brand-ink); }
+.llem-btn--accent { background: var(--ll-lemon); color: #111; }
+.llem-btn--accent:hover { filter: brightness(0.95); }
+.llem-btn--outline {
+  background: #fff; color: var(--ll-brand); border-color: var(--ll-brand);
+}
+.llem-btn--outline:hover { background: color-mix(in oklab, var(--ll-brand) 6%, white); }
+
+/* ===== Cards ===== */
+.llem-card {
+  background: #fff; border: 1px solid var(--ll-border);
+  border-radius: var(--ll-r-lg); padding: 16px;
+  box-shadow: var(--ll-shadow-sm);
+}
+.llem-card:hover { box-shadow: var(--ll-shadow-md); }
+
+/* ===== Hero (шапка-раздела) ===== */
+.llem-hero {
+  background: var(--ll-brand); color: #fff; border-radius: var(--ll-r-lg);
+  padding: 24px;
+}
+.llem-hero__title {
+  font-family: var(--font-brand);
+  letter-spacing: 0.18em; font-weight: 800; font-size: clamp(24px,3vw,36px);
+}
+.llem-hero__actions { display: flex; gap: 10px; margin-top: 12px; }
+
+/* ===== Inputs ===== */
+.llem-input, .llem-select {
+  width: 100%; padding: 10px 12px; border-radius: var(--ll-r-sm);
+  border: 1px solid var(--ll-border); background: #fff; font-size: 14px;
+}
+.llem-input:focus, .llem-select:focus {
+  outline: none; border-color: var(--ll-brand);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ll-brand) 20%, transparent);
+}
+
+/* ===== Grid меню ===== */
+.llem-grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.llem-dish__title {
+  font-family: var(--font-brand); letter-spacing: .04em; font-weight: 700;
+}
+.llem-price { opacity: .7; }
+
+/* ===== Helpers ===== */
+.container { max-width: 1024px; margin-inline: auto; padding-inline: 16px; }
+.mt-2 { margin-top: 8px; } .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 16px; }
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-lemon: var(--lemon);
+
+
+  --font-sans: var(--font-geist-sans); 
+  --font-brand: var(--font-fraunces, var(--font-sans));
+}
+
+@media (prefers-color-scheme: light) {
+  :root { color-scheme: light; }
+}
+/* ===== Base ===== */
+html, body {
+  background: var(--ll-bg);
+  color: var(--ll-fg);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
