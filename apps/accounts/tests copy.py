@@ -6,7 +6,9 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from django.core.cache import cache
 
-from LittleLemonAPI.models import MenuItem, Cart, Order, OrderItem, Category
+from apps.menu.models import MenuItem, Category
+from apps.cart.models import Cart 
+from apps.orders.models import Order, OrderItem 
 
 
 # ------------------------------

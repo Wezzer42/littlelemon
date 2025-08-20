@@ -24,6 +24,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),
+    path("api/", include("apps.menu.urls")),
+    path("api/", include("apps.cart.urls")),
+    path("api/", include("apps.orders.urls")),
+    path("api/", include("apps.accounts.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

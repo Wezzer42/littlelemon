@@ -28,7 +28,7 @@ class BaseSetup(TestCase):
         cls.delivery.groups.add(cls.g_delivery)
 
         # категории и меню
-        from LittleLemonAPI.models import Category, MenuItem
+        from apps.menu.models import Category, MenuItem
         cls.cat = Category.objects.create(title="Main")
         cls.m1 = MenuItem.objects.create(
             title="Pizza", price=Decimal("12.50"),
@@ -117,7 +117,7 @@ class ChecklistCourseraTests(BaseSetup):
             **bearer_hdr(t)
         )
         self.assertEqual(r.status_code, status.HTTP_200_OK, msg=r.content)
-        from LittleLemonAPI.models import MenuItem
+        from apps.menu.models import MenuItem
         self.assertTrue(MenuItem.objects.get(id=self.m1.id).featured)
 
     # Manager → assign users to delivery crew
@@ -136,7 +136,7 @@ class ChecklistCourseraTests(BaseSetup):
 
     # Manager → assign order to delivery crew (PATCH per spec)
     def test_manager_can_assign_order(self):
-        from LittleLemonAPI.models import Order
+        from apps.orders.models import Order
         o = Order.objects.create(user=self.customer, status=0, total=Decimal("0"))
         t = self.jwt_access("manager")
         r = self.c.patch(
@@ -150,7 +150,7 @@ class ChecklistCourseraTests(BaseSetup):
 
     # Delivery → view assigned
     def test_delivery_can_view_assigned(self):
-        from LittleLemonAPI.models import Order
+        from apps.orders.models import Order
         a = Order.objects.create(user=self.customer, delivery_crew=self.delivery, status=0, total=0)
         _ = Order.objects.create(user=self.customer, delivery_crew=None, status=0, total=0)
         t = self.jwt_access("crew")
@@ -163,7 +163,7 @@ class ChecklistCourseraTests(BaseSetup):
 
     # Delivery → mark delivered
     def test_delivery_can_patch_status(self):
-        from LittleLemonAPI.models import Order
+        from apps.orders.models import Order
         o = Order.objects.create(user=self.customer, delivery_crew=self.delivery, status=0, total=0)
         t = self.jwt_access("crew")
         r = self.c.patch(f"/api/orders/{o.id}", {"status": 1}, format="json", **bearer_hdr(t))
@@ -236,7 +236,7 @@ class ChecklistCourseraTests(BaseSetup):
 
     # Customer → view cart
     def test_customer_can_view_cart(self):
-        from LittleLemonAPI.models import Cart
+        from apps.cart.models import Cart
         Cart.objects.create(
             user=self.customer, menuitem=self.m1, quantity=1,
             unit_price=self.m1.price, price=self.m1.price
@@ -247,7 +247,7 @@ class ChecklistCourseraTests(BaseSetup):
 
     # Customer → place order (alias /api/cart/orders)
     def test_customer_can_place_order(self):
-        from LittleLemonAPI.models import Cart
+        from apps.cart.models import Cart
         Cart.objects.create(
             user=self.customer, menuitem=self.m1, quantity=2,
             unit_price=self.m1.price, price=self.m1.price * 2

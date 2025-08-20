@@ -2,12 +2,8 @@ from rest_framework import serializers
 from .models import Order, OrderItem
 from apps.menu.serializers import MenuItemSerializer
 from django.contrib.auth.models import User
+from apps.accounts.serializers import UserTinySerializer
 
-
-class UserTinySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["id", "username", "email"]
         
 class OrderItemSerializer(serializers.ModelSerializer):
     menuitem = MenuItemSerializer(read_only=True)
