@@ -32,11 +32,11 @@ class BaseSetup(TestCase):
         cls.cat = Category.objects.create(title="Main")
         cls.m1 = MenuItem.objects.create(
             title="Pizza", price=Decimal("12.50"),
-            featured=False, category=cls.cat, inventory=10
+            featured=False, category=cls.cat
         )
         cls.m2 = MenuItem.objects.create(
             title="Pasta", price=Decimal("10.00"),
-            featured=True, category=cls.cat, inventory=5
+            featured=True, category=cls.cat
         )
 
     def setUp(self):
