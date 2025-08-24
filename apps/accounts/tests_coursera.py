@@ -87,7 +87,7 @@ class ChecklistCourseraTests(BaseSetup):
             "category": "salad",
             "inventory": 3,
         }
-        r = self.c.post("/api/menu-items", payload, format="json", **bearer_hdr(t))
+        r = self.c.post("/api/menu-items", payload, format="multipart", **bearer_hdr(t))
         self.assertEqual(r.status_code, status.HTTP_201_CREATED, msg=r.content)
 
     # Admin → add categories
